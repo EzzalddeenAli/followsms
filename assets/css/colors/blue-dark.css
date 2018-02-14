@@ -1,0 +1,447 @@
+/*
+Template Name: Monster Admin
+Author: Themedesigner
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+/*
+Template Name: Monster Admin
+Author: Themedesigner
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+/*@import 'https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900';*/
+
+
+@font-face {
+  font-family:'Roboto';
+  src: url('../../fonts/Roboto-bold.ttf');
+  font-weight: bold;
+  font-style: bold;
+}
+
+
+@font-face {
+  font-family:'Roboto';
+  src: url('../../fonts/Roboto-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*Theme Colors*/
+/*bootstrap Color*/
+/*Light colors*/
+/*Normal Color*/
+/*Extra Variable*/
+/*Preloader*/
+.preloader {
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  position: fixed;
+  z-index: 99999;
+  background: #fff;
+}
+
+.preloader .cssload-speeding-wheel {
+  position: absolute;
+  top: calc(50% - 3.5px);
+  left: calc(50% - 3.5px);
+}
+
+/*******************
+/*Top bar
+*******************/
+.topbar {
+  background: #4d73b1;
+  /* Old browsers */
+  /*background: -moz-linear-gradient(left, #0178bc 0%, #00bdda 100%);*/
+  /* FF3.6-15 */
+  /*background: -webkit-linear-gradient(left, #0178bc 0%, #00bdda 100%);*/
+  /* Chrome10-25,Safari5.1-6 */
+  /*background: linear-gradient(to right, #0178bc 0%, #00bdda 100%);*/
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+  box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
+}
+
+.topbar .top-navbar .navbar-header {
+  background-color: #4d73b1;
+  text-align: left;
+  
+}
+
+.topbar .top-navbar .navbar-header .navbar-brand .dark-logo {
+  display: none;
+}
+
+.topbar .top-navbar .navbar-header .navbar-brand .light-logo {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.topbar .navbar-light .navbar-nav .nav-item > a.nav-link {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.topbar .navbar-light .navbar-nav .nav-item > a.nav-link:hover, .topbar .navbar-light .navbar-nav .nav-item > a.nav-link:focus {
+  color: #ffffff !important;
+}
+
+.logo-center .topbar .navbar-header {
+  background: transparent;
+  box-shadow: none;
+}
+
+.logo-center .topbar .top-navbar .navbar-header .navbar-brand .dark-logo {
+  display: none;
+}
+
+.logo-center .topbar .top-navbar .navbar-header .navbar-brand .light-logo {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.8);
+  
+}
+
+/*******************
+/*General Elements
+*******************/
+body,h1, h2, h3, h4, h5, h6{
+  font-family: 'Roboto';
+}
+
+a {
+  color: #4d73b1;
+}
+
+a.link:hover, a.link:focus {
+  color: #4d73b1 ;
+}
+
+.bg-theme {
+  background-color: #4d73b1 !important;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  background-color: #4d73b1;
+  border-color: #4d73b1;
+}
+
+.right-sidebar .rpanel-title {
+  background: #4d73b1;
+}
+
+.stylish-table tbody tr:hover, .stylish-table tbody tr.active {
+  border-left: 4px solid #4d73b1;
+}
+
+.text-themecolor {
+  color: #4d73b1 !important;
+}
+
+.profile-tab li a.nav-link.active,
+.customtab li a.nav-link.active {
+  border-bottom: 2px solid #4d73b1;
+  color: #4d73b1;
+}
+
+.profile-tab li a.nav-link:hover,
+.customtab li a.nav-link:hover {
+  color: #4d73b1;
+}
+
+/*******************
+/*Buttons
+*******************/
+.btn-themecolor,
+.btn-themecolor.disabled {
+  background: #4d73b1;
+  color: #ffffff;
+  border: 1px solid #4d73b1;
+}
+
+.btn-themecolor:hover,
+.btn-themecolor.disabled:hover {
+  background: #4d73b1;
+  opacity: 0.7;
+  border: 1px solid #4d73b1;
+}
+
+.btn-themecolor.active, .btn-themecolor:focus,
+.btn-themecolor.disabled.active,
+.btn-themecolor.disabled:focus {
+  background: #028ee1;
+}
+
+/*******************
+/*sidebar navigation
+*******************/
+.card-no-border .left-sidebar, .card-no-border .sidebar-nav {
+  background: #4d73b1;
+}
+
+.mini-sidebar .sidebar-nav {
+  background: transparent;
+}
+
+@media (min-width: 768px) {
+  .mini-sidebar .sidebar-nav #sidebarnav > li > ul {
+    background: #2b4478;
+  }
+
+  .mini-sidebar .sidebar-nav #sidebarnav>li:hover>a{
+    color: #16b1c5;
+    background: #152852;
+  }
+
+  .mini-sidebar .sidebar-nav #sidebarnav>li:hover>a i{color: #16b1c5;}
+
+}
+
+
+
+
+.sidebar-nav {
+  background: #4d73b1;
+}
+
+.sidebar-nav ul li a {
+  color: white;
+}
+
+.sidebar-nav ul li a.active, .sidebar-nav ul li a:hover {
+  color: #16b1c5;
+  background: #152852;
+  border-left-color: #16b1c5;
+}
+
+.sidebar-nav a:hover .has-arrow::after{
+  border-color:#4d73b1;
+}
+
+.sidebar-nav ul li a.active {
+  color: #16b1c5;
+}
+
+.sidebar-nav ul li.nav-small-cap {
+  color: #90a4ae;
+}
+
+.sidebar-nav > ul > li.active > a,.sidebar-nav > ul > li.active > a:not([href]):not([tabindex]) {
+  border-left: 3px solid #4d73b1;
+  color: #16b1c5;
+}
+
+
+
+.sidebar-nav > ul > li.active > a i {
+  color: #16b1c5;
+}
+
+.sidebar-nav > ul > li > a {
+  border-left: 3px solid #272c33;
+}
+
+.sidebar-nav > ul > li > a.active, .sidebar-nav > ul > li > a:hover {
+  border-left: 3px solid #4d73b1;
+}
+
+.sidebar-nav > ul > li > a.active i, .sidebar-nav > ul > li > a:hover i {
+  color: #16b1c5;
+}
+
+.sidebar-nav > ul > li > a i {
+  color: white;
+}
+
+.sidebar-nav > ul > li > a.active {
+  font-weight: 400;
+  background: #152852;
+  color: #4d73b1;
+}
+
+.sidebar-nav ul li ul{
+  background: #2b4478;
+}
+
+.left-sidebar{
+  padding-top:52px;
+}
+
+.sidebar-nav ul li ul li a::before{
+content:'- ';
+margin-right: 7px;
+}
+
+.dropdown-menu .user-profile .profile-text a,.user-profile .profile-text > a {
+  color: white ;
+}
+
+.user-profile .profile-text > a.link:hover{color:#16b1c5}
+
+.card-no-border .sidebar-footer {
+  background: #4d73b1;
+  box-shadow: 0px -4px 5px rgba(0, 0, 0, 0.25);
+}
+
+.card-no-border .sidebar-footer a{
+  color:white;
+}
+
+
+.card-no-border .sidebar-nav>ul>li>a.active{
+  background:#152852;
+}
+
+.sidebar-nav a:not([href]):not([tabindex]){
+  color:white;
+}
+
+.sidebar-nav .has-arrow::after{
+  border-color:white;
+}
+
+.sidebar-nav a:not([href]):not([tabindex]):focus,.sidebar-nav a:not([href]):not([tabindex]):hover{
+  color: #4d73b1;
+  background: #152852;
+}
+
+.sidebar-nav a.has-arrow:hover::after{
+  border-color:#4d73b1;
+}
+
+/*************************/
+/*user profile*/
+/*****************************/
+
+.user-profile{
+  box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
+}
+
+
+/*Card*/
+
+.card-no-border .card{
+  border-radius: 3px;
+  border-top: 3px solid #faa21c;
+  box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+}
+
+/*Tables*/
+
+
+.info-table{color: white;
+  font-size: 11px;
+  text-align: left;
+margin:0px;
+border-bottom:1px solid;}
+
+  .mini-sidebar .info-table{display: none;}
+
+
+  .table{font-size:13.3px;}
+.table-bordered{border-collapse: collapse;}
+.table-bordered td,.table-bordered th{
+  border:1px solid #e3e3e3;
+  padding: 5px;
+}
+.table .btn{padding:3px 6px;outline: 0;}
+.table .btn-circle{
+  border-radius: 2px;
+  width: 20px;
+  height: 20px;
+  padding: 1px;
+}
+
+.table-bordered th{background:#e3e3e3;color:#333;font-weight:bold;}
+.table-bordered th a,.table-bordered th i{color:#333 !important;}
+
+/*Layout Overrides*/
+
+.slimScrollDiv{
+      height: calc(100% - 133px) !important;
+}
+
+.topbar .top-navbar{min-height: auto;}
+
+.topbar .top-navbar .app-search{
+  margin-top:6px;
+}
+
+.topbar .top-navbar .navbar-header, .topbar .top-navbar .navbar-nav>.nav-item>.nav-link{
+  line-height: 2;
+}
+
+.topbar .notify{top: -17px;}
+
+.topbar .top-navbar .navbar-header .light-logo{width:70%;padding: 0px 10px;}
+
+.sidebar-nav ul li a{
+  font-size:13px ;
+  line-height: 1.2;
+}
+
+.sidebar-nav > ul > li > a{
+  padding: 12px 5px 12px 15px;
+
+}
+
+.sidebar-nav ul li ul{
+  padding-left: 5px;
+}
+
+.left-sidebar .slimScrollBar{
+  width: 12px !important; /*because it's generated inline on the fly using js*/
+  opacity: 0.6 !important;;
+  display: block !important;/* use this line to keep the scrollbar alwayes visible;*/
+  border-radius: 0px !important;;
+  left: 0px !important;;
+}
+
+.scroll-sidebar{padding-top:0px;}
+
+/************************/
+/* button style overrides */
+/*************************/
+
+.btn-info{
+  background-color: #4d73b1;
+  border-color: #1c3966;
+}
+
+.btn-info.active.focus, .btn-info.active:focus, .btn-info.active:hover, .btn-info.focus:active, .btn-info:active:focus, .btn-info:active:hover, .open>.dropdown-toggle.btn-info.focus, .open>.dropdown-toggle.btn-info:focus, .open>.dropdown-toggle.btn-info:hover, .btn-info.focus, .btn-info:focus{
+  background-color: #395f9c;
+  border-color: #1c3966;
+}
+
+button, input, optgroup, select, textarea{
+  font-family:'Roboto';
+}
+
+/*******************************/
+/*treeview overrides*/
+/******************************/
+.treeview .list-group-item{
+  padding: 1px;
+  border: 0;
+}
+
+
+
+/*****************************/
+/*media queries overrides*/
+/*************************************/
+@media (min-width: 768px){
+.mini-sidebar .sidebar-nav #sidebarnav>li>ul{
+top:auto;
+}
+
+.mini-sidebar .user-profile{
+  padding-bottom: 0px;
+}
+}

@@ -1,0 +1,164 @@
+<div class="row page-titles">
+    <div class="col-md-6 col-8 align-self-center">
+        <h3 class="text-themecolor m-b-0 m-t-0">{{phrase.semester}}</h3>
+    </div>
+    <div class="col-md-6 col-4 align-self-center">
+
+    </div>
+</div>
+
+<div class="row" ng-show="views.list">
+    <div class="col-12">
+        <div class="card">
+            <div class="row">
+                <div class="card-block">
+                    <div class="col-xlg-3 col-lg-3 col-md-3">
+                        <div class="input-group">
+                            <label>{{phrase.academicyears}}</label>
+                            <select ng-model="academicYear" ng-change="selectYear()" name="select-years">
+                                <option ng-selected="academicYear == year.id" ng-repeat="year in academicYears"
+                                        value="{{year.id}}">{{year.yearTitle}}
+                                </option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-xlg-9 col-lg-9 col-md-9">
+                        <button ng-click="changeView('add')" class="btn pull-right btn-success card-block-input-item">
+                            {{phrase.addSemester}}
+                        </button>
+
+
+                        <div class="pull-right card-block-input-group card-block-input-item">
+                            <div class="input-group input-group-sm">
+                                <input type="text" name="table_search" ng-model="searchText"
+                                       placeholder="{{phrase.Search}}" class="form-control">
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xlg-12 col-lg-12 col-md-12">
+                    <div class="card-block p-t-0">
+                        <div class="clearfix"></div>
+                        <h4 class="card-title">{{phrase.listSemesters}}</h4>
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered table-hover">
+                                <tbody>
+                                <tr>
+                                    <th>{{phrase.name}}</th>
+                                    <th>{{phrase.yearTitle}}</th>
+                                    <th>{{phrase.Operations}}</th>
+                                </tr>
+                                <tr ng-repeat="semester in semesters | filter:searchText">
+                                    <td>{{semester.name}}</td>
+                                    <td>{{semester.academic_year.yearTitle}}</td>
+                                    <td>
+
+                                        <button ng-click="edit(semester.id)" type="button"
+                                                class="btn btn-info btn-circle"
+                                                title="{{phrase.Edit}}" tooltip><i class="fa fa-pencil"></i></button>
+                                        <button ng-click="remove(semester,$index)" type="button"
+                                                class="btn btn-danger btn-circle" title="{{phrase.Remove}}" tooltip><i
+                                                class="fa fa-trash-o"></i></button>
+                                    </td>
+                                </tr>
+                                <tr ng-show="!academicYears.length">
+                                    <td class="noTableData" colspan="4">{{phrase.noSemsters}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="views.add">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-block">
+                <button ng-click="changeView('list')" class="btn btn-danger btn-flat pull-right card-block-input-item">
+                    {{phrase.cancelAdd}}
+                </button>
+                <h4 class="card-title">{{phrase.addSemester}}</h4>
+                <div class="table-responsive">
+
+                    <form class="form-horizontal" name="addyear" role="form" ng-submit="saveAdd()" novalidate>
+                        <div class="form-group row" ng-class="{'has-error': addyear.yearTitle.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.name}} * </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" ng-model="form.name" class="form-control" required
+                                       placeholder="{{phrase.name}}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.yearTitle}}
+                                * </label>
+                            <select ng-model="form.academic_year_id" name="academic_year_id">
+                                <option ng-repeat="year in academicYears" value="{{year.id}}">{{year.yearTitle}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group m-b-0">
+                            <div class="offset-sm-2 col-sm-10">
+                                <button type="submit" class="btn btn-info waves-effect waves-light"
+                                        ng-disabled="addyear.$invalid">{{phrase.addSemester}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="views.edit">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-block">
+                <button ng-click="changeView('list')" class="btn btn-danger btn-flat pull-right card-block-input-item">
+                    {{phrase.cancelAdd}}
+                </button>
+                <h4 class="card-title">{{phrase.editSemester}}</h4>
+                <div class="table-responsive">
+
+                    <form class="form-horizontal" name="addyear" role="form" ng-submit="saveEdit()" novalidate>
+                        <div class="form-group row" ng-class="{'has-error': addyear.name.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.name}} * </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" ng-model="form.name" class="form-control" required
+                                       placeholder="{{phrase.name}}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.yearTitle}}
+                                * </label>
+                            <select ng-model="form.academic_year_id" name="academic_year_id">
+                                <option ng-repeat="year in academicYears" value="{{year.id}}">{{year.yearTitle}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group m-b-0">
+                            <div class="offset-sm-2 col-sm-10">
+                                <button type="submit" class="btn btn-info waves-effect waves-light"
+                                        ng-disabled="addyear.$invalid">{{phrase.editSemester}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

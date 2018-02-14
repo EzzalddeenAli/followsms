@@ -1,0 +1,215 @@
+<div class="row page-titles">
+    <div class="col-md-6 col-8 align-self-center">
+        <h3 class="text-themecolor m-b-0 m-t-0">{{phrase.week}}</h3>
+    </div>
+    <div class="col-md-6 col-4 align-self-center">
+
+    </div>
+</div>
+
+<div class="row" ng-show="views.list">
+    <div class="col-12">
+        <div class="card">
+            <div class="row">
+                <div class="card-block">
+                    <div class="col-xlg-3 col-lg-3 col-md-3">
+                        <div class="input-group">
+                            <label>{{phrase.academicyears}}</label>
+                            <select ng-model="academicYear" ng-change="selectYear()" name="select-years">
+                                <option ng-selected="academicYear == year.id"  ng-repeat="year in academicYears" value="{{year.id}}">{{year.yearTitle}}
+                                </option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-xlg-3 col-lg-3 col-md-3">
+                        <div class="input-group ">
+                            <label>{{phrase.semester}}</label>
+                            <select ng-model="selSemester" ng-change="selectSemester()" name="select-years">
+                                <option ng-value="semester.id" ng-selected="selSemester == semester.id" ng-repeat="semester in semesters">{{semester.name}}
+                                </option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-xlg-3 col-lg-3 col-md-3">
+                        <div class="input-group ">
+                            <label>{{phrase.quarter}}</label>
+                            <select ng-model="selQuarter" ng-change="selectQuarter()" name="select-years">
+                                <option ng-value="quarter.id" ng-selected="selQuarter == quarter.id" ng-repeat="quarter in quarters" value="{{quarter.id}}">{{quarter.name}}</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-xlg-3 col-lg-3 col-md-3">
+
+                        <button ng-click="changeView('add')" class="btn pull-right btn-success card-block-input-item">
+                            {{phrase.addWeek}}
+                        </button>
+
+                        <div class="pull-right card-block-input-group card-block-input-item">
+                            <div class="input-group input-group-sm">
+                                <input type="text" name="table_search" ng-model="searchText"
+                                       placeholder="{{phrase.Search}}"
+                                       class="form-control">
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-xlg-12 col-lg-12 col-md-12">
+                    <div class="card-block p-t-0">
+                        <h4 class="card-title">{{phrase.listWeeks}}</h4>
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered table-hover">
+                                <tbody>
+                                <tr>
+                                    <th>{{phrase.name}}</th>
+                                    <th>{{phrase.quarter}}</th>
+                                    <th>{{phrase.Operations}}</th>
+                                </tr>
+                                <tr ng-repeat="week in weeks | filter:searchText">
+                                    <td>{{week.name}}</td>
+                                    <td>{{week.quarter.name}}</td>
+                                    <td>
+
+                                        <button ng-click="edit(week.id)" type="button"
+                                                class="btn btn-info btn-circle"
+                                                title="{{phrase.Edit}}" tooltip><i class="fa fa-pencil"></i></button>
+                                        <button ng-click="remove(week,$index)" type="button"
+                                                class="btn btn-danger btn-circle" title="{{phrase.Remove}}" tooltip><i
+                                                class="fa fa-trash-o"></i></button>
+                                    </td>
+                                </tr>
+                                <tr ng-show="!quarters.length">
+                                    <td class="noTableData" colspan="4">{{phrase.noWeek}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="views.add">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-block">
+                <button ng-click="changeView('list')" class="btn btn-danger btn-flat pull-right card-block-input-item">
+                    {{phrase.cancelAdd}}
+                </button>
+                <h4 class="card-title">{{phrase.addQuater}}</h4>
+                <div class="table-responsive">
+
+                    <form class="form-horizontal" name="addweek" role="form" ng-submit="saveAdd()" novalidate>
+                        <div class="form-group row" ng-class="{'has-error': addweek.name.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.name}} * </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" ng-model="form.name" class="form-control" required
+                                       placeholder="{{phrase.name}}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.academicyears}}
+                                * </label>
+                            <select ng-model="academicYear" name="academic_year_id" ng-change="selectYear()">
+                                <option ng-repeat="year in academicYears" value="{{year.id}}">{{year.yearTitle}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.semester}}
+                                * </label>
+                            <select ng-model="selSemester" id="semester_id" name="semester_id" ng-change="selectSemester()">
+                                <option ng-repeat="semester in semesters" value="{{semester.id}}">{{semester.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group row" ng-class="{'has-error': addweek.quarter_id.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.quarter}}
+                                * </label>
+                            <select ng-model="form.quarter_id" id="quarter_id" name="quarter_id" required >
+                                <option ng-repeat="quarter in quarters" value="{{quarter.id}}">{{quarter.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group m-b-0">
+                            <div class="offset-sm-2 col-sm-10">
+                                <button type="submit" class="btn btn-info waves-effect waves-light"
+                                        ng-disabled="addweek.$invalid">{{phrase.addWeek}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="views.edit">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-block">
+                <button ng-click="changeView('list')" class="btn btn-danger btn-flat pull-right card-block-input-item">
+                    {{phrase.cancelAdd}}
+                </button>
+                <h4 class="card-title">{{phrase.editWeek}}</h4>
+                <div class="table-responsive">
+
+                    <form class="form-horizontal" name="editweek" role="form" ng-submit="saveEdit()" novalidate>
+                        <div class="form-group row" ng-class="{'has-error': editweek.name.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.name}} * </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" ng-model="form.name" class="form-control" required
+                                       placeholder="{{phrase.name}}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.academicyears}}
+                                * </label>
+                            <select ng-model="academicYear" name="academic_year_id" ng-change="selectYear()">
+                                <option ng-repeat="year in academicYears" value="{{year.id}}">{{year.yearTitle}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.semester}}
+                                * </label>
+                            <select ng-model="selSemester"name="semester_id" ng-change="selectSemester()">
+                                <option ng-repeat="semester in semesters" value="{{semester.id}}">{{semester.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group row" ng-class="{'has-error': editweek.quarter_id.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.quarter}}
+                                * </label>
+                            <select ng-model="form.quarter_id" name="quarter_id" required >
+                                <option ng-repeat="quarter in quarters" value="{{quarter.id}}">{{quarter.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group m-b-0">
+                            <div class="offset-sm-2 col-sm-10">
+                                <button type="submit" class="btn btn-info waves-effect waves-light"
+                                        ng-disabled="editweek.$invalid">{{phrase.editQuarter}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

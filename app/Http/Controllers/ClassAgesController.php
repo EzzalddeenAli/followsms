@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\classAge;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 
 class ClassAgesController extends Controller
@@ -34,7 +33,7 @@ class ClassAgesController extends Controller
 
     public function listAll($id)
     {
-        return classAge::where('academic_year_id', $id)->with('academicYear')->get()->toArray();
+        return classAge::where('academic_year_id', $id)->with('academicYear', 'classes')->get()->toArray();
     }
 
     public function delete($id)
@@ -51,8 +50,14 @@ class ClassAgesController extends Controller
     public function create()
     {
         $classAge                   = new classAge();
-        $classAge->name             = \Input::get('name');
         $classAge->academic_year_id = \Input::get('academic_year_id');
+        $classAge->class_id         = \Input::get('class_id');
+
+        $classAge->from = $this->panelInit->date_to_unix(\Input::get('from'));
+        $classAge->to   = $this->panelInit->date_to_unix(\Input::get('to'));
+
+        $classAge->years  = \Input::get('years');
+        $classAge->months = \Input::get('months');
         $classAge->save();
 
         return $this->panelInit->apiOutput(true,
@@ -60,8 +65,7 @@ class ClassAgesController extends Controller
             , $this->panelInit->language['classAgeAddSuc']
             , [
                 "id"            => $classAge->id,
-                'academic_year' => $classAge->academic_year_id,
-                "name"          => \Input::get('name'),
+                'academic_year' => $classAge->academic_year_id
             ]
         );
     }
@@ -75,9 +79,16 @@ class ClassAgesController extends Controller
 
     public function edit($id)
     {
-        $classAge                   = classAge::find($id);
-        $classAge->name             = Input::get('name');
+        $classAge = classAge::find($id);
+
         $classAge->academic_year_id = \Input::get('academic_year_id');
+        $classAge->class_id         = \Input::get('class_id');
+        $classAge->from             = $this->panelInit->date_to_unix(\Input::get('from'));
+        $classAge->to               = $this->panelInit->date_to_unix(\Input::get('to'));
+
+        $classAge->years  = \Input::get('years');
+        $classAge->months = \Input::get('months');
+
         $classAge->save();
 
         return $this->panelInit->apiOutput(
@@ -87,7 +98,6 @@ class ClassAgesController extends Controller
             [
                 "id"            => $classAge->id,
                 'academic_year' => $classAge->academic_year_id,
-                "name"          => \Input::get('name'),
             ]
         );
     }

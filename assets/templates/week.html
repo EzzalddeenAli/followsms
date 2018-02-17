@@ -72,11 +72,15 @@
                                 <tr>
                                     <th>{{phrase.name}}</th>
                                     <th>{{phrase.quarter}}</th>
+                                    <th>{{phrase.dateFrom}}</th>
+                                    <th>{{phrase.dateTo}}</th>
                                     <th>{{phrase.Operations}}</th>
                                 </tr>
                                 <tr ng-repeat="week in weeks | filter:searchText">
                                     <td>{{week.name}}</td>
                                     <td>{{week.quarter.name}}</td>
+                                    <td>{{week.from}}</td>
+                                    <td>{{week.to}}</td>
                                     <td>
 
                                         <button ng-click="edit(week.id)" type="button"
@@ -134,6 +138,9 @@
                                 </option>
                             </select>
                         </div>
+
+
+
                         <div class="form-group row" ng-class="{'has-error': addweek.quarter_id.$invalid}">
                             <label class="col-sm-2 text-right control-label col-form-label">{{phrase.quarter}}
                                 * </label>
@@ -142,6 +149,23 @@
                                 </option>
                             </select>
                         </div>
+
+                        <div class="form-group row" ng-class="{'has-error': addweek.from.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.dateFrom}} * </label>
+                            <div class="col-sm-10">
+                                <input type="text" date-picker name="from" ng-model="form.from" class="form-control datemask" required
+                                       placeholder="{{phrase.dateFrom}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row" ng-class="{'has-error': addweek.to.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.dateTo}} * </label>
+                            <div class="col-sm-10">
+                                <input type="text" date-picker name="to" ng-model="form.to" class="form-control datemask" required
+                                       placeholder="{{phrase.dateTo}}">
+                            </div>
+                        </div>
+
                         <div class="form-group m-b-0">
                             <div class="offset-sm-2 col-sm-10">
                                 <button type="submit" class="btn btn-info waves-effect waves-light"
@@ -191,6 +215,9 @@
                                 </option>
                             </select>
                         </div>
+
+
+
                         <div class="form-group row" ng-class="{'has-error': editweek.quarter_id.$invalid}">
                             <label class="col-sm-2 text-right control-label col-form-label">{{phrase.quarter}}
                                 * </label>
@@ -198,6 +225,22 @@
                                 <option ng-repeat="quarter in quarters" value="{{quarter.id}}">{{quarter.name}}
                                 </option>
                             </select>
+                        </div>
+
+                        <div class="form-group row" ng-class="{'has-error': editweek.from.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.dateFrom}} * </label>
+                            <div class="col-sm-10">
+                                <input type="text" date-picker name="from" ng-model="form.from" class="form-control datemask" required
+                                       placeholder="{{phrase.dateFrom}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row" ng-class="{'has-error': editweek.to.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.dateTo}} * </label>
+                            <div class="col-sm-10">
+                                <input type="text" date-picker name="to" ng-model="form.to" class="form-control datemask" required
+                                       placeholder="{{phrase.dateTo}}">
+                            </div>
                         </div>
                         <div class="form-group m-b-0">
                             <div class="offset-sm-2 col-sm-10">

@@ -586,7 +586,7 @@ schoex.controller('stageController', function (dataFactory, $rootScope, $scope) 
             response = apiResponse(data, 'edit');
             if (response) {
                 $scope.changeView('list');
-                $scope.division=response.division_id;
+                $scope.division = response.division_id;
                 $scope.selectDivision();
                 showHideLoad(true);
             }
@@ -600,7 +600,7 @@ schoex.controller('stageController', function (dataFactory, $rootScope, $scope) 
             var response = apiResponse(data, 'add');
             if (response) {
                 $scope.changeView('list');
-                $scope.division=response.division_id;
+                $scope.division = response.division_id;
                 $scope.selectDivision();
             }
             showHideLoad(true);
@@ -624,22 +624,38 @@ schoex.controller('stageController', function (dataFactory, $rootScope, $scope) 
 
 schoex.controller('classAgeController', function (dataFactory, $rootScope, $scope) {
     $scope.classAges = {};
+    $scope.classes = [];
     $scope.views = {};
     $scope.views.list = true;
     $scope.form = {};
     $scope.academicYears = {};
+    $scope.academicYear = $rootScope.dashboardData.selectedAcYear;
 
     dataFactory.httpRequest('index.php/academic/listAll').then(function (data) {
         $scope.academicYears = data;
         showHideLoad(true);
     });
 
+
+
+    $scope.selectAcademicYear = function () {
+        dataFactory.httpRequest('index.php/classes/listAll/').then(function (data) {
+            $scope.classes = [];
+            data.classes.forEach(function (classe) {
+                if (classe.classAcademicYear == $scope.form.academic_year_id) {
+                    $scope.classes.push(classe);
+                }
+            });
+        });
+    };
+
     $scope.selectYear = function () {
         dataFactory.httpRequest('index.php/classAge/listAll/' + $scope.academicYear).then(function (data) {
             $scope.classAges = data;
-
         });
     };
+
+    $scope.selectYear();
 
 
     $scope.remove = function (item, index) {
@@ -657,8 +673,10 @@ schoex.controller('classAgeController', function (dataFactory, $rootScope, $scop
     $scope.edit = function (id) {
         showHideLoad();
         dataFactory.httpRequest('index.php/classAge/' + id).then(function (data) {
-            $scope.changeView('edit');
             $scope.form = data;
+            $scope.form.months = parseInt(data.months);
+            $scope.selectAcademicYear();
+            $scope.changeView('edit');
             showHideLoad(true);
         });
     };
@@ -666,14 +684,14 @@ schoex.controller('classAgeController', function (dataFactory, $rootScope, $scop
     $scope.saveEdit = function () {
         showHideLoad();
         dataFactory.httpRequest('index.php/classAge/' + $scope.form.id, 'POST', {}, $scope.form).then(function (data) {
-            response = apiResponse(data, 'edit');
+            var response = apiResponse(data, 'edit');
             if (response) {
-                $scope.academicYear = $scope.form.academic_year_id;
-                $scope.selectYear();
                 $scope.changeView('list');
+                $scope.academicYear = response.academic_year;
+                $scope.selectYear();
 
             }
-            showHideLoad(true);
+           showHideLoad(true);
         });
     };
 
@@ -683,10 +701,9 @@ schoex.controller('classAgeController', function (dataFactory, $rootScope, $scop
         dataFactory.httpRequest('index.php/classAge', 'POST', {}, $scope.form).then(function (data) {
             var response = apiResponse(data, 'add');
             if (response) {
-                $scope.academicYear = $scope.form.academic_year_id;
                 $scope.changeView('list');
+                $scope.academicYear = response.academic_year;
                 $scope.selectYear();
-
             }
             showHideLoad(true);
         });
@@ -696,9 +713,14 @@ schoex.controller('classAgeController', function (dataFactory, $rootScope, $scop
         if (view === "add" || view === "list" || view === "show") {
             $scope.form = {};
         }
+        if (view === 'add') {
+            $scope.form.academic_year_id = $scope.academicYear;
+            $scope.selectAcademicYear();
+        }
         $scope.views.list = false;
         $scope.views.add = false;
         $scope.views.edit = false;
         $scope.views[view] = true;
     };
-});
+})
+;

@@ -18,4 +18,18 @@ class classAge extends Model
     {
         return $this->belongsTo('\classes', 'class_id');
     }
+
+    public function getFromAttribute($from)
+    {
+        $dashboard = new \DashboardInit();
+
+        return $dashboard->unix_to_date($from);
+    }
+
+    public function getToAttribute($to)
+    {
+        $dashboard = new \DashboardInit();
+
+        return $dashboard->unix_to_date($to);
+    }
 }

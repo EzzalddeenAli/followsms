@@ -55,6 +55,8 @@ class WeekController extends Controller
         $week              = new week();
         $week->name        = \Input::get('name');
         $week->quarter_id = \Input::get('quarter_id');
+        $week->from = $this->panelInit->date_to_unix(\Input::get('from'));
+        $week->to   = $this->panelInit->date_to_unix(\Input::get('to'));
         $week->save();
 
         return $this->panelInit->apiOutput(true,
@@ -80,6 +82,8 @@ class WeekController extends Controller
         $week              = week::find($id);
         $week->name        = Input::get('name');
         $week->quarter_id = \Input::get('quarter_id');
+        $week->from = $this->panelInit->date_to_unix(\Input::get('from'));
+        $week->to   = $this->panelInit->date_to_unix(\Input::get('to'));
         $week->save();
 
         return $this->panelInit->apiOutput(

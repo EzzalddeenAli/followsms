@@ -28,8 +28,6 @@
                             {{phrase.addClassAge}}
                         </button>
 
-                        
-
                         <div class="pull-right card-block-input-group card-block-input-item">
                             <div class="input-group input-group-sm">
                                 <input type="text" name="table_search" ng-model="searchText"
@@ -51,13 +49,19 @@
                             <table class="table table-bordered table-hover">
                                 <tbody>
                                 <tr>
-                                    <th>{{phrase.name}}</th>
-                                    <th>{{phrase.yearTitle}}</th>
+
+                                    <th>{{phrase.academicyear}}</th>
+                                    <th>{{phrase.class}}</th>
+                                    <th>{{phrase.dateFrom}}</th>
+                                    <th>{{phrase.dateTo}}</th>
                                     <th>{{phrase.Operations}}</th>
                                 </tr>
                                 <tr ng-repeat="classAge in classAges | filter:searchText">
-                                    <td>{{classAge.name}}</td>
                                     <td>{{classAge.academic_year.yearTitle}}</td>
+                                    <td>{{classAge.classes.className}}</td>
+                                    <td>{{classAge.from}}</td>
+                                    <td>{{classAge.to}}</td>
+
                                     <td>
 
                                         <button ng-click="edit(classAge.id)" type="button"
@@ -92,26 +96,63 @@
                 <h4 class="card-title">{{phrase.addClassAge}}</h4>
                 <div class="table-responsive">
 
-                    <form class="form-horizontal" name="addyear" role="form" ng-submit="saveAdd()" novalidate>
-                        <div class="form-group row" ng-class="{'has-error': addyear.yearTitle.$invalid}">
-                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.name}} * </label>
+                    <form class="form-horizontal" name="addClassAge" role="form" ng-submit="saveAdd()" novalidate>
+                        <div class="form-group row" ng-class="{'has-error': addClassAge.academic_year_id.$invalid}" >
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.academicyear}}
+                                * </label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" ng-model="form.name" class="form-control" required
-                                       placeholder="{{phrase.name}}">
+                                <select ng-model="form.academic_year_id" ng-change="selectAcademicYear()" class="form-control" name="academic_year_id" required>
+                                    <option ng-repeat="year in academicYears" value="{{year.id}}">{{year.yearTitle}}
+                                    </option>
+                                </select>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.yearTitle}}
+                        <div class="form-group row" ng-class="{'has-error': addClassAge.class_id.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.class}}
                                 * </label>
-                            <select ng-model="form.academic_year_id" name="academic_year_id">
-                                <option ng-repeat="year in academicYears" value="{{year.id}}">{{year.yearTitle}}
-                                </option>
-                            </select>
+                            <div class="col-sm-10">
+                                <select ng-model="form.class_id" class="form-control" name="class_id" required>
+                                    <option ng-repeat="class in classes" value="{{class.id}}">
+                                        {{class.className}}
+                                    </option>
+                                </select>
+                            </div>
                         </div>
+                        <div class="form-group row" ng-class="{'has-error': addClassAge.from.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.dateFrom}} * </label>
+                            <div class="col-sm-10">
+                                <input type="text" date-picker name="from" ng-model="form.from" class="form-control datemask" required
+                                       placeholder="{{phrase.dateFrom}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row" ng-class="{'has-error': addClassAge.to.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.dateTo}} * </label>
+                            <div class="col-sm-10">
+                                <input type="text" date-picker name="to" ng-model="form.to" class="form-control datemask" required
+                                       placeholder="{{phrase.dateTo}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row" ng-class="{'has-error': addClassAge.years.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.ageYears}} * </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="years" ng-model="form.years" class="form-control" required
+                                       placeholder="{{phrase.ageYears}}">
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-class="{'has-error': addClassAge.months.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.ageMonths}} * </label>
+                            <div class="col-sm-10">
+                                <input type="number" name="months" min="1" max="12" ng-model="form.months" class="form-control" required
+                                       placeholder="{{phrase.ageMonths}}">
+                            </div>
+                        </div>
+
                         <div class="form-group m-b-0">
                             <div class="offset-sm-2 col-sm-10">
                                 <button type="submit" class="btn btn-info waves-effect waves-light"
-                                        ng-disabled="addyear.$invalid">{{phrase.addClassAge}}
+                                        ng-disabled="addClassAge.$invalid">{{phrase.addClassAge}}
                                 </button>
                             </div>
                         </div>
@@ -133,26 +174,63 @@
                 <h4 class="card-title">{{phrase.editClassAge}}</h4>
                 <div class="table-responsive">
 
-                    <form class="form-horizontal" name="addyear" role="form" ng-submit="saveEdit()" novalidate>
-                        <div class="form-group row" ng-class="{'has-error': addyear.name.$invalid}">
-                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.name}} * </label>
+                    <form class="form-horizontal" name="editClassAge" role="form" ng-submit="saveEdit()" novalidate>
+                        <div class="form-group row" ng-class="{'has-error': editClassAge.academic_year_id.$invalid}" >
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.academicyear}}
+                                * </label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" ng-model="form.name" class="form-control" required
-                                       placeholder="{{phrase.name}}">
+                                <select ng-model="form.academic_year_id" ng-change="selectAcademicYear()" class="form-control" name="academic_year_id" required>
+                                    <option ng-repeat="year in academicYears" value="{{year.id}}">{{year.yearTitle}}
+                                    </option>
+                                </select>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.yearTitle}}
+                        <div class="form-group row" ng-class="{'has-error': editClassAge.class_id.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.class}}
                                 * </label>
-                            <select ng-model="form.academic_year_id" name="academic_year_id">
-                                <option ng-repeat="year in academicYears" value="{{year.id}}">{{year.yearTitle}}
-                                </option>
-                            </select>
+                            <div class="col-sm-10">
+                                <select ng-model="form.class_id" class="form-control" name="class_id" required>
+                                    <option ng-repeat="class in classes" value="{{class.id}}">
+                                        {{class.className}}
+                                    </option>
+                                </select>
+                            </div>
                         </div>
+                        <div class="form-group row" ng-class="{'has-error': editClassAge.from.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.dateFrom}} * </label>
+                            <div class="col-sm-10">
+                                <input type="text" date-picker name="from" ng-model="form.from" class="form-control datemask" required
+                                       placeholder="{{phrase.dateFrom}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row" ng-class="{'has-error': editClassAge.to.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.dateTo}} * </label>
+                            <div class="col-sm-10">
+                                <input type="text" date-picker name="to" ng-model="form.to" class="form-control datemask" required
+                                       placeholder="{{phrase.dateTo}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row" ng-class="{'has-error': editClassAge.years.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.ageYears}} * </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="years" ng-model="form.years" class="form-control" required
+                                       placeholder="{{phrase.ageYears}}">
+                            </div>
+                        </div>
+                        <div class="form-group row" ng-class="{'has-error': editClassAge.months.$invalid}">
+                            <label class="col-sm-2 text-right control-label col-form-label">{{phrase.ageMonths}} * </label>
+                            <div class="col-sm-10">
+                                <input type="number" name="months" min="1" max="12" ng-model="form.months" class="form-control" required
+                                       placeholder="{{phrase.ageMonths}}">
+                            </div>
+                        </div>
+
                         <div class="form-group m-b-0">
                             <div class="offset-sm-2 col-sm-10">
                                 <button type="submit" class="btn btn-info waves-effect waves-light"
-                                        ng-disabled="addyear.$invalid">{{phrase.editClassAge}}
+                                        ng-disabled="editClassAge.$invalid">{{phrase.editClassAge}}
                                 </button>
                             </div>
                         </div>

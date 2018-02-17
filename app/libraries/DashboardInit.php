@@ -102,6 +102,7 @@ class DashboardInit
                     "stages"    => ["title" => "Stages", "url" => URL::to('#/stage'), "permissions" => ['admin']],
                     "classes"   => ["title" => "classes", "url" => URL::to('#/classes'), "permissions" => ['admin']],
                     "sections"  => ["title" => "sections", "url" => URL::to('#/sections'), "permissions" => ['admin']],
+                    "class Ages"  => ["title" => "class Ages", "url" => URL::to('#/classAge'), "permissions" => ['admin']],
                 ],
             ],
 
@@ -785,13 +786,11 @@ class DashboardInit
 
         if ($success) {
             $returnArray['status'] = 'success';
-
-            return $returnArray;
         } else {
             $returnArray['status'] = 'failed';
-
-            return $returnArray;
         }
+
+        return $returnArray;
     }
 
     public function date_to_unix($time, $format = "")

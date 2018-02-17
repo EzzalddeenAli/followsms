@@ -41,6 +41,12 @@ class ClassesController extends Controller
         $toReturn            = [];
         $teachers            = \User::where('role', 'teacher')->get()->toArray();
         $toReturn['classes'] = [];
+
+        $subjects =  \subject::get();
+        foreach ($subjects as $value) {
+            $toReturn['subject'][$value->id] = $value->subjectTitle;
+        }
+
         $classes             = \classes::with(['division', 'stage'])->where('classAcademicYear', $this->panelInit->selectAcYear);
 
         if (isset($this->data['users']) && $this->data['users']->role == "teacher") {
@@ -56,6 +62,9 @@ class ClassesController extends Controller
         }
 
         $classes->map(function ($class) use ($toReturn) {
+            if (!empty($class->classSubjects)) {
+                $class->classSubjects = json_decode($class->classSubjects, true);
+            }
             if (!empty($class->classTeacher)) {
                 $teachersIds  = json_decode($class->classTeacher, true);
                 $teacherNames = [];
@@ -96,6 +105,7 @@ class ClassesController extends Controller
 
         $classes                    = new \classes();
         $classes->className         = \Input::get('className');
+//        $classes->classSubjects     = json_encode(\Input::get('classSubjects'));
         $classes->classTeacher      = json_encode(\Input::get('classTeacher'));
         $classes->classAcademicYear = $this->panelInit->selectAcYear;
         $classes->division_id       = \Input::get('division_id');
@@ -117,8 +127,8 @@ class ClassesController extends Controller
 
     function fetch($id)
     {
-        $classDetail                  = \classes::where('id', $id)->first()->toArray();
-        $classDetail['classTeacher']  = json_decode($classDetail['classTeacher']);
+        $classDetail                 = \classes::where('id', $id)->first()->toArray();
+        $classDetail['classTeacher'] = json_decode($classDetail['classTeacher']);
 
         return $classDetail;
     }
@@ -129,9 +139,10 @@ class ClassesController extends Controller
 
         $classes                = \classes::find($id);
         $classes->className     = \Input::get('className');
+//        $classes->classSubjects = json_encode(\Input::get('classSubjects'));
         $classes->classTeacher  = json_encode(\Input::get('classTeacher'));
-        $classes->division_id       = \Input::get('division_id');
-        $classes->stage_id          = \Input::get('stage_id');
+        $classes->division_id   = \Input::get('division_id');
+        $classes->stage_id      = \Input::get('stage_id');
 
         $classes->save();
 
